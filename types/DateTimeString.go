@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	layout string = "2006-01-02T15:04:05.000000Z"
+	layout string = "2006-01-02T15:04:05"
 )
 
 type DateTimeString time.Time
@@ -27,7 +27,11 @@ func (d *DateTimeString) UnmarshalJSON(b []byte) error {
 		return returnError()
 	}
 
-	if s == "" || s == "0000-00-00 00:00:00" {
+	if len(s) > len(layout) {
+		s = s[:len(layout)]
+	}
+
+	if s == "" || s == "0000-00-00T00:00:00" {
 		d = nil
 		return nil
 	}

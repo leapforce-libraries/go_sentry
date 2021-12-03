@@ -6,6 +6,7 @@ import (
 
 	errortools "github.com/leapforce-libraries/go_errortools"
 	go_http "github.com/leapforce-libraries/go_http"
+	"github.com/tomnomnom/linkheader"
 )
 
 const (
@@ -63,6 +64,24 @@ func (service *Service) httpRequest(requestConfig *go_http.RequestConfig) (*http
 	}
 
 	return request, response, e
+}
+
+func nextURL(response *http.Response) string {
+	linkHeader := response.Header.Get("link")
+	if linkHeader == "" {
+		return ""
+	}
+	links := linkheader.Parse(linkHeader)
+	for _, link := range links {
+		if link.Rel == "next" {
+			if link.Params["results"] == "true" {
+				return link.URL
+			}
+			return ""
+		}
+	}
+
+	return ""
 }
 
 func (service *Service) url(path string) string {
