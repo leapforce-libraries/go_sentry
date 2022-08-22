@@ -12,11 +12,11 @@ import (
 )
 
 type Event struct {
-	ID          string                 `json:"id"`
+	Id          string                 `json:"id"`
 	EventType   string                 `json:"event.type"`
-	GroupID     go_types.Int64String   `json:"groupID"`
-	EventID     string                 `json:"eventID"`
-	ProjectID   go_types.Int64String   `json:"projectID"`
+	GroupId     go_types.Int64String   `json:"groupID"`
+	EventId     string                 `json:"eventID"`
+	ProjectId   go_types.Int64String   `json:"projectID"`
 	Message     string                 `json:"message"`
 	Title       string                 `json:"title"`
 	Location    string                 `json:"location"`
@@ -54,7 +54,7 @@ func (service *Service) GetEvents(config *GetEventsConfig) (*[]Event, *errortool
 
 		requestConfig := go_http.RequestConfig{
 			Method:        http.MethodGet,
-			URL:           url,
+			Url:           url,
 			ResponseModel: &_events,
 		}
 		_, response, e := service.httpRequest(&requestConfig)
@@ -64,7 +64,7 @@ func (service *Service) GetEvents(config *GetEventsConfig) (*[]Event, *errortool
 
 		events = append(events, _events...)
 
-		url = nextURL(response)
+		url = nextUrl(response)
 	}
 
 	return &events, nil

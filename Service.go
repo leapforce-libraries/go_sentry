@@ -11,7 +11,7 @@ import (
 
 const (
 	apiName string = "Sentry"
-	apiURL  string = "https://sentry.io/api/0"
+	apiUrl  string = "https://sentry.io/api/0"
 	/*dateTimeFormat            string = "2006-01-02T15:04:05Z"
 	dateTimeFormatCustomField string = "2006-01-02 15:04:05"
 	dateFormat                string = "2006-01-02"
@@ -58,7 +58,7 @@ func (service *Service) httpRequest(requestConfig *go_http.RequestConfig) (*http
 	errorResponse := ErrorResponse{}
 	(*requestConfig).ErrorModel = &errorResponse
 
-	request, response, e := service.httpService.HTTPRequest(requestConfig)
+	request, response, e := service.httpService.HttpRequest(requestConfig)
 	if errorResponse.Message != "" {
 		e.SetMessage(errorResponse.Message)
 	}
@@ -66,7 +66,7 @@ func (service *Service) httpRequest(requestConfig *go_http.RequestConfig) (*http
 	return request, response, e
 }
 
-func nextURL(response *http.Response) string {
+func nextUrl(response *http.Response) string {
 	linkHeader := response.Header.Get("link")
 	if linkHeader == "" {
 		return ""
@@ -85,7 +85,7 @@ func nextURL(response *http.Response) string {
 }
 
 func (service *Service) url(path string) string {
-	return fmt.Sprintf("%s/%s", apiURL, path)
+	return fmt.Sprintf("%s/%s", apiUrl, path)
 }
 
 func (service *Service) APIName() string {

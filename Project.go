@@ -10,7 +10,7 @@ import (
 )
 
 type Project struct {
-	ID          go_types.Int64String   `json:"id"`
+	Id          go_types.Int64String   `json:"id"`
 	Slug        string                 `json:"slug"`
 	Name        string                 `json:"name"`
 	DateCreated s_types.DateTimeString `json:"dateCreated"`
@@ -31,7 +31,7 @@ func (service *Service) GetProjects() (*[]Project, *errortools.Error) {
 
 		requestConfig := go_http.RequestConfig{
 			Method:        http.MethodGet,
-			URL:           url,
+			Url:           url,
 			ResponseModel: &_projects,
 		}
 		_, response, e := service.httpRequest(&requestConfig)
@@ -41,7 +41,7 @@ func (service *Service) GetProjects() (*[]Project, *errortools.Error) {
 
 		projects = append(projects, _projects...)
 
-		url = nextURL(response)
+		url = nextUrl(response)
 	}
 
 	return &projects, nil
